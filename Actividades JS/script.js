@@ -1,5 +1,5 @@
 window.onload = load;
-//Mensaje de rror hay que borrar
+//Mensaje de error hay que borrar
 //patern hora fecha y tef
 //ej11
 
@@ -21,7 +21,10 @@ function load() {
     function validar() {
         if (this.value == null || this.value == ""){
             var error = document.getElementById("errores");
-            error.innerHTML ="ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
+            var sMensaje = document.createElement('p');
+            sMensaje.innerHTML = "ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
+            error.appendChild(sMensaje);
+            // error.innerHTML ="ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
@@ -29,6 +32,10 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
+            var error = document.getElementById("errores");
+            if (error.hasChildNodes()){
+                error.removeChild(error.firstChild);
+            }//Fin Si
         }//Fin Si
     }//Fin Funcion
 
@@ -81,8 +88,8 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
-            }else{
-                this.addEventListener("focusout", function(){
+        }else{
+            this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
         }//Fin Si
@@ -109,8 +116,8 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
-            }else{
-                this.addEventListener("focusout", function(){
+        }else{
+            this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
         }//Fin Si
@@ -126,8 +133,8 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
-            }else{
-                this.addEventListener("focusout", function(){
+        }else{
+            this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
         }//Fin Si
@@ -144,8 +151,8 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
-            }else{
-                this.addEventListener("focusout", function(){
+        }else{
+            this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
         }//Fin Si
@@ -162,8 +169,8 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
-            }else{
-                this.addEventListener("focusout", function(){
+        }else{
+            this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
         }//Fin Si
@@ -180,10 +187,12 @@ function load() {
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
-            }else{
-                this.addEventListener("focusout", function(){
+        }else{
+            this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
             });
+            var error = document.getElementById("errores");
+            console.log(error.contains(p));
         }//Fin Si
     }//Fin Funcion
 }
