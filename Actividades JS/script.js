@@ -20,14 +20,23 @@ function load() {
     ape.addEventListener("blur", validar);
     function validar() {
         if (this.value == null || this.value == ""){
+            console.log(document.activeElement.name);
+            // if (document.activeElement.class != null){
+            //     document.activeElement.removeAttribute("class");
+            // }//Fin Si
             var error = document.getElementById("errores");
-            var sMensaje = document.createElement('p');
-            sMensaje.innerHTML = "ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
-            error.appendChild(sMensaje);
-            // error.innerHTML ="ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
-            this.addEventListener("focusout", function(){
-                this.setAttribute("class","error");
-            });
+            if (error.innerText.length == 0){
+                error.innerText = "ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
+                this.addEventListener("focus", function(){
+                    this.setAttribute("class","error");
+                });
+            }else{
+                error.removeChild(error.firstChild);
+                error.innerText = "ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
+                this.addEventListener("focus", function(){
+                    this.setAttribute("class","error");
+                });
+            }//Fin Si
         }else{
             this.addEventListener("focusout", function(){
                 this.removeAttribute("class");
@@ -147,7 +156,7 @@ function load() {
         var patternFecha = /^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/;
         if (!patternFecha.test(this.value)){
             var error = document.getElementById("errores");
-            error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe venir en formato dd/mm/yyyy o dd-mm-yyyy";
+            error.innerHTML = this.id[0].toUpperCase() + this.id.slice(1)+" errónea. Introdúzcala de nuevo. (dd/mm/yyyy)";
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
@@ -183,7 +192,7 @@ function load() {
         var patternHora = /^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/;
         if (!patternHora.test(this.value)){
             var error = document.getElementById("errores");
-            error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe venir en formato hh:mm";
+            error.innerHTML = this.id[0].toUpperCase() + this.id.slice(1)+" errónea. Introdúzcala de nuevo. (hh:mm)";
             this.addEventListener("focusout", function(){
                 this.setAttribute("class","error");
             });
