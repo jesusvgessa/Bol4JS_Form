@@ -2,6 +2,9 @@ window.onload = load;
 
 function load() {
     //Entorno:
+    var formulario = document.getElementById('formulario');
+    var enviar = false;
+
     //Inputs
     var nombre = document.getElementById("nombre");
     var ape = document.getElementById("apellidos");
@@ -61,6 +64,7 @@ function load() {
     fecha.addEventListener("focusout", validarFecha);
     telefono.addEventListener("focusout", validarTelefono);
     hora.addEventListener("focusout", validarHora);
+    formulario.addEventListener('submit', validarEnviar);
 
     //Algoritmo:
     //Ejercicio 2
@@ -77,12 +81,15 @@ function load() {
             error.innerText = "ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
             this.focus();
             this.setAttribute("class","error");
+            enviar = false;
         }else if(!patternNomApe.test(this.value)){
             error.innerText = "ERROR: "+this.id.toUpperCase()+" debe contener solo letras.";
             this.focus();
             this.setAttribute("class","error");
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -95,16 +102,20 @@ function load() {
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         } else if (isNaN(this.value)){
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe ser un numero.";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         } else if (this.value < 0 || this.value > 105) {
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe estar en el rango de 0-105.";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");    
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -117,8 +128,10 @@ function load() {
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe contener 8 numero seguido de un guion y letra ( 88888888-A ).";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -131,8 +144,10 @@ function load() {
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe contener @ y .";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -145,8 +160,10 @@ function load() {
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe seleccionar una opcion";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -159,8 +176,10 @@ function load() {
             error.innerHTML = this.id[0].toUpperCase() + this.id.slice(1)+" errónea. Introdúzcala de nuevo. (dd/mm/yyyy)";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -173,8 +192,10 @@ function load() {
             error.innerHTML ="ERROR: "+this.id.toUpperCase()+" debe contener 9 numeros.";
             this.setAttribute("class","error");
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
@@ -187,18 +208,26 @@ function load() {
             error.innerHTML = this.id[0].toUpperCase() + this.id.slice(1)+" errónea. Introdúzcala de nuevo. (hh:mm)";
             this.setAttribute("class","error");           
             this.focus();
+            enviar = false;
         }else{
             this.removeAttribute("class");
+            enviar = true;
         }//Fin Si
     }//Fin Funcion
 
     //Ejercicio 11
-//     var enviar = document.getElementById("enviar");
-//     var error = document.getElementById("errores");
-//     if (error.innerText.length == 0){
-//         enviar.setAttribute("type","reset");
-//         error.innerText = "No se puede enviar el formulario si hay errores.";
-//     }else{
-//         enviar.setAttribute("type","submit");
-//     }//Fin Si
+    function validarEnviar(evento){
+        if (!enviar) {
+            if (error.innerText.length != 0){
+                error.removeChild(error.firstChild);
+            }//Fin Si
+            error.innerHTML = "No se puede enviar el formulario con campos invalidos.";
+            evento.preventDefault();
+        }else{
+            var confirmacion = confirm("Enviar formulario");
+            if (!confirmacion){
+                evento.preventDefault();
+            }//Fin Si
+        }//Fin Si
+    }//Fin Funcion
 }
