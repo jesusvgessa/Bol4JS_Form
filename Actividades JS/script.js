@@ -20,10 +20,6 @@ function load() {
     ape.addEventListener("blur", validar);
     function validar() {
         if (this.value == null || this.value == ""){
-            console.log(document.activeElement.name);
-            // if (document.activeElement.class != null){
-            //     document.activeElement.removeAttribute("class");
-            // }//Fin Si
             var error = document.getElementById("errores");
             if (error.innerText.length == 0){
                 error.innerText = "ERROR: "+this.id.toUpperCase()+" no se puede quedar vacio.";
@@ -153,7 +149,11 @@ function load() {
     var fecha = document.getElementById("fecha");
     fecha.addEventListener("blur", validarFecha);
     function validarFecha() {
-        var patternFecha = /^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/;
+        // ^ Busca el principio de nuestra cadena.
+        // ? Permite que haya 0 o 1 vez nuestra expresión anterior (.-)
+        // | le indico que uno u otro, y en este caso tengo 3 opciones
+        // 
+        var patternFecha = /^(?:3[01]|[12][0-9]|0?[1-9])([\-/])(0?[1-9]|1[1-2])\1\d{4}$/;
         if (!patternFecha.test(this.value)){
             var error = document.getElementById("errores");
             error.innerHTML = this.id[0].toUpperCase() + this.id.slice(1)+" errónea. Introdúzcala de nuevo. (dd/mm/yyyy)";
@@ -171,6 +171,7 @@ function load() {
     var telefono = document.getElementById("telefono");
     telefono.addEventListener("blur", validarTelefono);
     function validarTelefono() {
+        // Le indico el rango de valores, y el numero de veces que tiene que aparecer
         var patternTelefono = /[0-9]{9}/;
         if (!patternTelefono.test(this.value)){
             var error = document.getElementById("errores");
@@ -189,7 +190,7 @@ function load() {
     var hora = document.getElementById("hora");
     hora.addEventListener("blur", validarHora);
     function validarHora() {
-        var patternHora = /^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/;
+        var patternHora = /^(?:3[01]|[12][0-9]|0?[1-9])([\:])(0?[1-9]|1[1-2])$/;
         if (!patternHora.test(this.value)){
             var error = document.getElementById("errores");
             error.innerHTML = this.id[0].toUpperCase() + this.id.slice(1)+" errónea. Introdúzcala de nuevo. (hh:mm)";
@@ -204,4 +205,14 @@ function load() {
             console.log(error.contains(p));
         }//Fin Si
     }//Fin Funcion
+
+    //Ejercicio 11
+    var enviar = document.getElementById("enviar");
+    var error = document.getElementById("errores");
+    if (error.innerText.length == 0){
+        enviar.setAttribute("type","reset");
+        error.innerText = "No se puede enviar el formulario si hay errores.";
+    }else{
+        enviar.setAttribute("type","submit");
+    }//Fin Si
 }
